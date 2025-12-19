@@ -1,0 +1,150 @@
+---
+import { Image } from "astro:assets";
+
+import portrait1 from "../assets/wedshots/jakob-owens-unsplash.jpg";
+import portrait2 from "../assets/wedshots/leonardo-miranda-unsplash.jpg";
+import portrait3 from "../assets/wedshots/nathan-dumlao-2-unsplash.jpg";
+import portrait4 from "../assets/wedshots/nathan-dumlao-unsplash.jpg";
+import portrait5 from "../assets/wedshots/nikita-shirokov-unsplash.jpg";
+import portrait6 from "../assets/wedshots/sandy-millar-unsplash.jpg";
+import portrait7 from "../assets/wedshots/vadim-paripa-unsplash.jpg";
+
+const galleryImages = [
+    { src: portrait1, alt: "First look on the veranda" },
+    { src: portrait2, alt: "Bridal bouquet close-up" },
+    { src: portrait3, alt: "Couple walking through the garden" },
+    { src: portrait4, alt: "Sunset toast with friends" },
+    { src: portrait5, alt: "First dance candid" },
+    { src: portrait6, alt: "Bridal party cheering" },
+    { src: portrait7, alt: "Sparkler send-off moment" },
+];
+---
+
+<section
+    style="
+        background-color: var(--color-primary);
+        color: var(--color-surface);
+    "
+>
+    <div class="mx-auto w-full max-w-6xl px-6 pt-24">
+        <header class="mb-16 max-w-3xl">
+            <p
+                class="text-sm uppercase tracking-[0.35em]"
+                style="color: var(--color-secondary); opacity: 0.6;"
+            >
+                Gallery
+            </p>
+            <h2
+                class="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl"
+                style="color: var(--color-surface);"
+            >
+                Scroll through the memories
+            </h2>
+            <p
+                class="mt-6 text-lg"
+                style="color: var(--color-surface); opacity: 0.75;"
+            >
+                A curated strip of the moments we never want to forget—from the
+                first look to the final sparkler.
+            </p>
+        </header>
+    </div>
+
+    <div
+        id="gallery-scroll"
+        class="relative flex min-h-screen w-full items-center overflow-hidden px-6"
+    >
+        <div class="gallery-track flex items-center gap-8">
+            {
+                galleryImages.map((image) => (
+                    <figure
+                        class="relative aspect-square w-[240px] sm:w-[300px] lg:w-[360px] flex-none overflow-hidden rounded-[32px] border shadow-[0_25px_60px_rgba(0,0,0,0.35)]"
+                        style="
+                            border-color: var(--color-muted);
+                            background: color-mix(in srgb, var(--color-surface) 5%, transparent);
+                        "
+                    >
+                        <Image
+                            src={image.src}
+                            alt={image.alt}
+                            loading="lazy"
+                            format="webp"
+                            width={800}
+                            height={800}
+                            fit="cover"
+                            class="block h-full w-full"
+                            imgClass="h-full w-full object-cover object-center"
+                        />
+                        <figcaption
+                            class="absolute inset-x-0 bottom-0 bg-gradient-to-t px-6 py-4 text-sm"
+                            style="
+                                background: linear-gradient(to top, var(--color-text) 70%, transparent);
+                                color: var(--color-surface);
+                                opacity: 0.8;
+                            "
+                        >
+                            {image.alt}
+                        </figcaption>
+                    </figure>
+                ))
+            }
+        </div>
+    </div>
+
+    <div class="mx-auto w-full max-w-6xl px-6 pb-24">
+        <footer class="mt-24 text-center" style="color: var(--color-muted);">
+            <p>That’s our reel—thank you for walking through it with us.</p>
+        </footer>
+    </div>
+</section>
+
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    gsap.registerPlugin(ScrollTrigger);
+
+    requestAnimationFrame(() => {
+        const gallery = document.getElementById("gallery-scroll");
+        if (!gallery) return;
+
+        const track = gallery.querySelector(".gallery-track");
+        if (!track) return;
+
+        const applyCenterPadding = () => {
+            const firstCard = track.querySelector("figure");
+            if (!firstCard) return;
+
+            const viewportWidth = gallery.clientWidth;
+            const cardWidth = firstCard.getBoundingClientRect().width;
+            const padding = Math.max((viewportWidth - cardWidth) / 2, 24);
+
+            track.style.paddingLeft = `${padding}px`;
+            track.style.paddingRight = `${padding}px`;
+        };
+
+        const getScrollLength = () => track.scrollWidth - gallery.clientWidth;
+
+        applyCenterPadding();
+
+        gsap.to(track, {
+            x: () => -getScrollLength(),
+            ease: "none",
+            scrollTrigger: {
+                trigger: gallery,
+                start: "top top",
+                end: () => "+=" + getScrollLength(),
+                pin: true,
+                scrub: 0.6,
+                invalidateOnRefresh: true,
+                onRefresh: applyCenterPadding,
+            },
+        });
+
+        ScrollTrigger.addEventListener("refreshInit", () => {
+            track.style.removeProperty("transform");
+            applyCenterPadding();
+        });
+
+        window.addEventListener("resize", () => ScrollTrigger.refresh());
+    });
+</script>

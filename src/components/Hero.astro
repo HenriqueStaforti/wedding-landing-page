@@ -1,0 +1,97 @@
+---
+import background from "../assets/background.svg?url";
+---
+
+<section
+    id="hero"
+    class="hero relative overflow-hidden [&_.section__inner]:max-w-none [&_.section__inner]:p-0"
+    style={`
+        background-image: url("${background}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-color: var(--color-primary);
+        color: var(--color-surface);
+    `}
+>
+    <div class="w-full px-6 py-20 md:py-28 lg:py-36">
+        <div
+            class="mx-auto flex w-full max-w-6xl flex-col gap-12 md:flex-row md:items-end"
+        >
+            <div class="space-y-6 text-left md:max-w-3xl">
+                <p
+                    class="text-xs uppercase tracking-[0.65em]"
+                    style="color: var(--color-secondary); opacity: 0.7;"
+                >
+                    The wedding of
+                </p>
+                <h1
+                    class="font-display text-[clamp(3.5rem,8vw,6.5rem)] uppercase leading-[0.88] tracking-tight drop-shadow-md"
+                    id="hero-heading"
+                    style="color: var(--color-surface);"
+                >
+                    said yes!
+                </h1>
+                <p
+                    class="max-w-2xl text-base leading-relaxed md:text-lg"
+                    style="color: var(--color-surface); opacity: 0.9;"
+                >
+                    An editorial soirée in the heart of the city — bold florals,
+                    late-night vinyl, and a guest list filled with our favorite
+                    people. Come for the vows, stay for the midnight espresso
+                    martinis.
+                </p>
+                <a
+                    class="inline-flex items-center gap-3 border px-7 py-3 text-sm font-semibold uppercase tracking-[0.4em] transition"
+                    style="
+                        border-color: var(--color-muted);
+                        color: var(--color-surface);
+                    "
+                    href="#about"
+                    onmouseover="this.style.backgroundColor='var(--color-surface)';this.style.color='var(--color-text)'"
+                    onmouseout="this.style.backgroundColor='';this.style.color='var(--color-surface)'"
+                >
+                    Read our story <span aria-hidden="true">↘</span>
+                </a>
+            </div>
+
+            <div class="text-left md:text-right">
+                <p
+                    class="text-xs uppercase tracking-[0.45em]"
+                    style="color: var(--color-secondary); opacity: 0.7;"
+                >
+                    Saturday
+                </p>
+                <p
+                    class="font-display text-4xl uppercase tracking-[0.2em]"
+                    style="color: var(--color-surface);"
+                >
+                    21 · 06 · 2026
+                </p>
+                <p
+                    class="mt-4 text-sm font-semibold uppercase tracking-[0.35em]"
+                    style="color: var(--color-secondary); opacity: 0.7;"
+                >
+                    Mexico City • La Casa Azul
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    import gsap from "gsap";
+    import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
+    gsap.registerPlugin(ScrambleTextPlugin);
+
+    gsap.to(document.querySelector("#hero-heading"), {
+        scrambleText: {
+            text: "said yes!",
+            revealDelay: 0.2,
+            tweenLength: true,
+        },
+        ease: "power2.inOut",
+        overwrite: "auto",
+        duration: 1,
+    });
+</script>

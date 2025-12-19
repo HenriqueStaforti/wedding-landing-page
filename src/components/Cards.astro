@@ -1,0 +1,42 @@
+---
+import Card from "./Card.astro";
+
+const cards = [
+    {
+        imageAlt: "RSVP",
+        title: "RSVP",
+        description: "Let us know if you’ll be joining our special day!",
+        href: "/rsvp",
+    },
+    {
+        imageAlt: "Wishlist",
+        title: "Wishlist",
+        description: "See our gift wishlist and help us start our new chapter.",
+        href: "/wishlist",
+    },
+];
+---
+
+<section class="max-w-4xl mx-auto my-16 px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {
+            cards.map((card) => (
+                <a
+                    href={card.href}
+                    class="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                    style="
+                        --tw-ring-color: var(--color-secondary);
+                        --tw-ring-offset-color: var(--color-primary);
+                    "
+                >
+                    <Card
+                        image={card.image}
+                        imageAlt={card.imageAlt}
+                        title={card.title}
+                        description={card.description}
+                    />
+                </a>
+            ))
+        }
+    </div>
+</section>
