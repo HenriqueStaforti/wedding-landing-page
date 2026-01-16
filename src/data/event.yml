@@ -1,115 +1,123 @@
 hero:
   tagline: "O casamento do Guilherme e da Schaiane!"
-  title: "said yes!"
+  title: "disseram sim!"
   description: >
-    An editorial soirée in the heart of the city — bold florals, late-night vinyl,
-    and a guest list filled with our favorite people. Come for the vows, stay for
-    the midnight espresso martinis.
-  weekday: "Saturday"
+    Uma festa épica no coração da cidade — flores exageradas, vinil até de madrugada,
+    e uma lista de convidados cheia de gente que a gente realmente gosta (vocês passaram no filtro).
+    Venham pelos votos, fiquem pelo open bar e pelas fofocas do casamento.
+  weekday: "Sábado"
   dateDisplay: "21 · 06 · 2026"
-  location: "Mexico City • La Casa Azul"
+  location: "Cidade do México • La Casa Azul"
 
 story:
-  chapterLabel: "Chapter One"
-  heading: "Our Story"
+  chapterLabel: "Capítulo Um"
+  heading: "Nossa História"
   body: |
-    We met on a crisp autumn afternoon, when a simple conversation blossomed into an inseparable friendship.
-    Over time, that friendship grew into love, and together we've shared adventures, dreams, and challenges.
-    Today, we celebrate not only our love, but also the family and friends who have joined us on this journey.
+    A gente se conheceu numa tarde qualquer de outono, quando uma conversa boba virou amizade inseparável.
+    Com o tempo, essa amizade virou amor — e juntos já compartilhamos aventuras, sonhos, boletos e crises existenciais.
+    Hoje, celebramos não só nosso amor, mas também a família e os amigos que nos aguentaram até aqui.
+    Se vocês estão lendo isso, parabéns: sobreviveram à friendzone e às nossas indecisões.
   imageAsset: "wedshots/vadim-paripa-unsplash.jpg"
-  imageAlt: "Our story together"
+  imageAlt: "Nossa história juntos"
   highlights:
-    - "💌 From friends to soulmates"
-    - "✈️ Adventures across continents"
-    - "💍 Engaged under autumn skies"
+    - "💌 De amigos para almas gêmeas (demorou, mas foi)"
+    - "✈️ Aventuras por aí (e brigas sobre destinos)"
+    - "💍 Noivado num céu de outono (sem clichê de Paris)"
 
 schedule:
-  eyebrow: "Our Celebration"
-  title: "Wedding Day Schedule"
+  eyebrow: "Nossa Celebração"
+  title: "Programação do Grande Dia"
   description: >
-    Follow along to savor every cherished moment with us—from vows to the last sparkling toast.
+    Acompanhe cada momento com a gente — dos votos até o último brinde, quando ninguém mais lembra o próprio nome.
   events:
     - number: "01"
-      label: "Ceremony"
-      title: "Ceremony & Vows"
+      label: "Cerimônia"
+      title: "Cerimônia & Votos"
       description: >
-        Gather on the chapel lawn for an intimate ceremony beneath the olive trees. Ushers are ready to guide you to your seat.
+        Reúnam-se no gramado da capela para uma cerimônia íntima sob as oliveiras.
+        Preparem os lencinhos — ou finjam que é alergia, a gente entende.
       details:
-        - "Prelude music begins at 3:40 PM"
-        - "Rings & vows at golden hour"
-        - "Quiet shuttle service begins at 3:15 PM"
+        - "Música ambiente começa às 15:40"
+        - "Alianças e votos na hora dourada (pra foto ficar linda)"
+        - "Transporte discreto a partir das 15:15 (pra quem não sabe chegar)"
     - number: "02"
-      label: "Welcome"
-      title: "Garden Cocktail Hour"
+      label: "Recepção"
+      title: "Hora do Coquetel no Jardim"
       description: >
-        Sip seasonal cocktails, enjoy live jazz, and mingle beneath the café lights as we transition into the celebration.
+        Bebam drinks de estação, curtam jazz ao vivo e façam networking amoroso sob as luzinhas.
+        É aqui que a fofoca começa a rolar solta.
       details:
-        - "Signature drink: Lavender Paloma"
-        - "String trio taking requests"
-        - "Canapés served throughout the garden"
+        - "Drink da casa: Paloma de Lavanda (chique, né?)"
+        - "Trio de cordas aceitando pedidos (menos Despacito)"
+        - "Canapés servidos pelo jardim (corra antes que acabem)"
     - number: "03"
-      label: "Dinner"
-      title: "Candlelit Reception"
+      label: "Jantar"
+      title: "Recepção à Luz de Velas"
       description: >
-        Savor a farm-to-table feast paired with curated wines while heartfelt toasts and stories fill the room.
+        Saboreiem um banquete da fazenda para a mesa, harmonizado com vinhos selecionados,
+        enquanto brindes emocionados (e constrangedores) tomam conta do salão.
       details:
-        - "Dinner call at 6:25 PM"
-        - "Toasts begin after the second course"
-        - "Dessert trio plated at 8:10 PM"
+        - "Chamada para o jantar às 18:25 (fome é seu problema até lá)"
+        - "Brindes começam após o segundo prato (preparem os discursos)"
+        - "Trio de sobremesas servido às 20:10 (sim, são três)"
     - number: "04"
-      label: "Celebration"
-      title: "First Dance & Party"
+      label: "Festa"
+      title: "Primeira Dança & Baile"
       description: >
-        Kick off the dance floor with our first dance, then stay on your feet for live DJ sets, photo moments, and late-night bites.
+        Comecem a dançar com nossa primeira dança, depois se joguem na pista
+        com DJ ao vivo, fotos constrangedoras e lanchinhos de madrugada.
       details:
-        - "First dance at 8:50 PM"
-        - "Dessert lounge opens at 9:30 PM"
-        - "Photo booth until 11:30 PM"
+        - "Primeira dança às 20:50 (vamos fingir que ensaiamos)"
+        - "Lounge de sobremesas abre às 21:30 (segunda rodada)"
+        - "Cabine de fotos até 23:30 (guardem as evidências)"
     - number: "05"
-      label: "Farewell"
-      title: "Sparkler Send-Off"
+      label: "Despedida"
+      title: "Saída com Sparklers"
       description: >
-        Close the night with a sparkling farewell and a final toast to forever. Shuttles depart every 20 minutes.
+        Encerrem a noite com uma despedida brilhante e um último brinde ao futuro.
+        Depois disso, a ressaca é por conta de vocês.
       details:
-        - "Grab a sparkler by the garden gate"
-        - "Final toast at 11:55 PM"
-        - "Last shuttle leaves at 12:30 AM"
+        - "Peguem um sparkler no portão do jardim"
+        - "Brinde final às 23:55 (o último, prometemos)"
+        - "Último transporte às 00:30 (quem perder, Uber)"
 
 gallery:
-  eyebrow: "Gallery"
-  title: "Scroll through the memories"
+  eyebrow: "Galeria"
+  title: "Role pelas memórias"
   description: >
-    A curated strip of the moments we never want to forget—from the first look to the final sparkler.
+    Uma seleção dos momentos que nunca queremos esquecer — do primeiro olhar ao último sparkler.
+    Ou seja, provas de que isso realmente aconteceu.
   images:
     - asset: "wedshots/jakob-owens-unsplash.jpg"
-      alt: "First look on the veranda"
+      alt: "Primeiro olhar na varanda"
     - asset: "wedshots/leonardo-miranda-unsplash.jpg"
-      alt: "Bridal bouquet close-up"
+      alt: "Buquê da noiva em close"
     - asset: "wedshots/nathan-dumlao-2-unsplash.jpg"
-      alt: "Couple walking through the garden"
+      alt: "Casal passeando pelo jardim"
     - asset: "wedshots/nathan-dumlao-unsplash.jpg"
-      alt: "Sunset toast with friends"
+      alt: "Brinde ao pôr do sol com amigos"
     - asset: "wedshots/nikita-shirokov-unsplash.jpg"
-      alt: "First dance candid"
+      alt: "Primeira dança espontânea"
     - asset: "wedshots/sandy-millar-unsplash.jpg"
-      alt: "Bridal party cheering"
+      alt: "Padrinhos comemorando"
     - asset: "wedshots/vadim-paripa-unsplash.jpg"
-      alt: "Sparkler send-off moment"
+      alt: "Momento da saída com sparklers"
 
 cards:
   - imageAlt: "RSVP"
-    title: "RSVP"
-    description: "Let us know if you’ll be joining our special day!"
+    title: "Confirme Presença"
+    description: "Diga se você vai aparecer — ou se vai nos dar um bolo (literalmente seria bom, mas não esse tipo)."
     href: "/rsvp"
-  - imageAlt: "Wishlist"
-    title: "Wishlist"
-    description: "See our gift wishlist and help us start our new chapter."
+  - imageAlt: "Lista de Presentes"
+    title: "Lista de Presentes"
+    description: "Veja nossa lista de desejos e nos ajude a começar essa nova fase sem precisar dormir no chão."
     href: "/wishlist"
 
 countdown:
-  label: "Wedding Weekend Countdown"
-  heading: 'Countdown to "We Do"'
+  label: "Contagem Regressiva para o Casório"
+  heading: 'Contagem para o "Sim, eu aceito"'
   message: >
-    Every sunrise brings us closer to the moment we gather together. Save the date and get ready for an unforgettable celebration.
+    Cada dia que passa nos aproxima do momento em que vamos todos nos reunir.
+    Marquem na agenda e se preparem — vai ser inesquecível (ou pelo menos a ressaca vai ser).
   target: "2026-06-21T21:00:00Z"
-  location: "Mexico City • La Casa Azul"
+  location: "Cidade do México • La Casa Azul"
