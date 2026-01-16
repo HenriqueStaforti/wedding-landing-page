@@ -1,0 +1,154 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getWishlistData } from "../data/wishlistData";
+
+const wishlist = getWishlistData();
+---
+
+<Layout title="Wishlist - Guilherme & Schaiane">
+    <section
+        class="section"
+        style="background-color: var(--color-secondary); min-height: auto; padding-top: 4rem; padding-bottom: 4rem;"
+    >
+        <div class="section__inner" style="opacity: 1; transform: none;">
+            <header class="mb-12 text-center">
+                <p
+                    class="mb-2 text-sm font-semibold uppercase tracking-[0.25em]"
+                    style="color: var(--color-accent);"
+                >
+                    {wishlist.eyebrow}
+                </p>
+                <h1
+                    class="mb-4 font-display text-4xl font-bold md:text-5xl"
+                    style="color: var(--color-primary);"
+                >
+                    {wishlist.title}
+                </h1>
+                <p
+                    class="mx-auto max-w-2xl text-lg leading-relaxed"
+                    style="color: var(--color-primary);"
+                >
+                    {wishlist.description}
+                </p>
+            </header>
+
+            <a
+                href="/"
+                class="mb-8 inline-flex items-center gap-2 text-sm font-medium transition-colors hover:opacity-80"
+                style="color: var(--color-accent);"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="M19 12H5M12 19l-7-7 7-7"></path>
+                </svg>
+                Voltar ao início
+            </a>
+
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {
+                    wishlist.gifts.map((gift) => (
+                        <div
+                            class="gift-card group relative flex flex-col overflow-hidden rounded-2xl transition-all duration-300"
+                            style="background-color: var(--color-background);"
+                        >
+                            <div
+                                class="relative h-48 w-full overflow-hidden"
+                                style="background-color: var(--color-primary);"
+                            >
+                                <div class="flex h-full items-center justify-center">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="48"
+                                        height="48"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        style="color: var(--color-secondary);"
+                                    >
+                                        <path d="M20 12v10H4V12" />
+                                        <path d="M2 7h20v5H2z" />
+                                        <path d="M12 22V7" />
+                                        <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
+                                        <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
+                                    </svg>
+                                </div>
+                                {gift.priority === "high" && (
+                                    <span
+                                        class="absolute right-3 top-3 rounded-full px-3 py-1 text-xs font-semibold"
+                                        style="background-color: var(--color-accent); color: var(--color-text-light);"
+                                    >
+                                        Favorito
+                                    </span>
+                                )}
+                            </div>
+                            <div class="flex flex-1 flex-col p-5">
+                                <span
+                                    class="mb-2 text-xs font-medium uppercase tracking-wider"
+                                    style="color: var(--color-accent);"
+                                >
+                                    {gift.category}
+                                </span>
+                                <h3
+                                    class="mb-2 text-lg font-semibold"
+                                    style="color: var(--color-primary);"
+                                >
+                                    {gift.title}
+                                </h3>
+                                <p
+                                    class="mb-4 flex-1 text-sm leading-relaxed"
+                                    style="color: color-mix(in srgb, var(--color-primary) 70%, var(--color-text-light) 30%);"
+                                >
+                                    {gift.description}
+                                </p>
+                                <div class="flex items-center justify-between">
+                                    <span
+                                        class="text-lg font-bold"
+                                        style="color: var(--color-primary);"
+                                    >
+                                        {gift.price}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+
+            <div class="mt-12 text-center">
+                <p
+                    class="text-sm"
+                    style="color: color-mix(in srgb, var(--color-primary) 70%, var(--color-text-light) 30%);"
+                >
+                    Para mais informações sobre como presentear, entre em contato
+                    conosco.
+                </p>
+            </div>
+        </div>
+    </section>
+</Layout>
+
+<style>
+    .gift-card {
+        border: 1px solid
+            color-mix(in srgb, var(--color-accent), transparent 60%);
+        box-shadow: var(--shadow-card);
+    }
+
+    .gift-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 32px 70px
+            color-mix(in srgb, var(--color-primary), transparent 65%);
+    }
+</style>
