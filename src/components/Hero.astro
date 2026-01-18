@@ -1,6 +1,8 @@
 ---
+import GiftCard from "./GiftCard.astro";
 import { getEventData } from "../data/eventData";
-const { hero } = getEventData();
+
+const { hero, cards, giftCard } = getEventData();
 ---
 
 <section
@@ -40,25 +42,40 @@ const { hero } = getEventData();
                 </p>
             </div>
 
-            <div class="text-left md:text-right">
-                <p
-                    class="text-xs uppercase tracking-[0.45em]"
-                    style="color: var(--color-secondary); opacity: 0.7;"
-                >
-                    {hero.weekday}
-                </p>
-                <p
-                    class="font-display text-4xl uppercase tracking-[0.2em]"
-                    style="color: var(--color-background);"
-                >
-                    {hero.dateDisplay}
-                </p>
-                <p
-                    class="mt-4 text-sm font-semibold uppercase tracking-[0.35em]"
-                    style="color: var(--color-secondary); opacity: 0.7;"
-                >
-                    {hero.location}
-                </p>
+            <div class="flex flex-col justify-between text-left md:text-right">
+                <div>
+                    <p
+                        class="text-xs uppercase tracking-[0.45em]"
+                        style="color: var(--color-secondary); opacity: 0.7;"
+                    >
+                        {hero.weekday}
+                    </p>
+                    <p
+                        class="font-display text-4xl uppercase tracking-[0.2em]"
+                        style="color: var(--color-background);"
+                    >
+                        {hero.dateDisplay}
+                    </p>
+                    <p
+                        class="mt-4 text-sm font-semibold uppercase tracking-[0.35em]"
+                        style="color: var(--color-secondary); opacity: 0.7;"
+                    >
+                        {hero.location}
+                    </p>
+                </div>
+                <div class="mt-9">
+                    <a
+                        href={giftCard.href}
+                        class="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                    >
+                        <GiftCard
+                            image={giftCard.image}
+                            imageAlt={giftCard.imageAlt}
+                            title={giftCard.title}
+                            description={giftCard.description}
+                        />
+                    </a>
+                </div>
             </div>
         </div>
     </div>

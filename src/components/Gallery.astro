@@ -45,8 +45,8 @@ const galleryImages = (galleryContent.images ?? [])
         color: var(--color-secondary);
     "
 >
-    <div class="mx-auto w-full max-w-6xl px-6 pt-24">
-        <header class="mb-16 max-w-3xl">
+    <div class="mx-auto w-full max-w-6xl px-6">
+        <header class="max-w-3xl">
             <p
                 class="text-sm uppercase tracking-[0.35em]"
                 style="color: var(--color-secondary); opacity: 0.6;"
@@ -69,92 +69,130 @@ const galleryImages = (galleryContent.images ?? [])
     </div>
 
     <div
-        id="gallery-scroll"
-        class="relative flex min-h-screen w-full items-center overflow-hidden px-6"
+        id="gallery-carousel"
+        class="relative flex min-h-screen w-full items-center justify-center overflow-hidden px-11 sm:px-6 py-12"
     >
-        <div class="gallery-track flex items-center gap-8">
-            {
-                galleryImages.map((image) => (
-                    <figure
-                        class="relative aspect-square w-60 sm:w-75 lg:w-100 flex-none overflow-hidden rounded-4xl"
-                        style="
-                            background: color-mix(in srgb, var(--color-secondary) 5%, transparent);
-                        "
-                    >
-                        <Image
-                            src={image.src}
-                            alt={image.alt}
-                            loading="lazy"
-                            format="webp"
-                            width={800}
-                            height={800}
-                            fit="cover"
-                            class="block h-full w-full"
-                        />
-                        <figcaption
-                            class="absolute inset-x-0 bottom-0 bg-linear-to-t px-6 py-4 text-sm"
-                            style="
-                                background: linear-gradient(to top, var(--color-text) 50%, transparent);
-                                color: var(--color-secondary);
-                                opacity: 0.8;
-                            "
+        <div class="gallery-container relative w-full max-w-2xl">
+            <div class="relative aspect-square w-full overflow-hidden rounded-4xl" style="background: color-mix(in srgb, var(--color-secondary) 5%, transparent);">
+                {
+                    galleryImages.map((image, index) => (
+                        <figure
+                            class="gallery-item absolute inset-0 flex-none transition-opacity duration-300"
+                            data-index={index}
+                            style="opacity: 0;"
                         >
-                            {image.alt}
-                        </figcaption>
-                    </figure>
-                ))
-            }
+                            <Image
+                                src={image.src}
+                                alt={image.alt}
+                                loading="lazy"
+                                format="webp"
+                                width={800}
+                                height={800}
+                                fit="cover"
+                                class="block h-full w-full"
+                            />
+                            <figcaption
+                                class="absolute inset-x-0 bottom-0 bg-linear-to-t px-6 py-4 text-sm"
+                                style="
+                                    background: linear-gradient(to top, var(--color-text) 50%, transparent);
+                                    color: var(--color-secondary);
+                                    opacity: 0.8;
+                                "
+                            >
+                                {image.alt}
+                            </figcaption>
+                        </figure>
+                    ))
+                }
+            </div>
+
+            <button
+                id="prev-btn"
+                class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-10 sm:-translate-x-16 transform rounded-full p-1 sm:p-3 transition-colors hover:opacity-80"
+                style="background-color: var(--color-secondary); color: var(--color-primary);"
+                aria-label="Imagem anterior"
+            >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+
+            <button
+                id="next-btn"
+                class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-10 sm:translate-x-16 transform rounded-full p-1 sm:p-3 transition-colors hover:opacity-80"
+                style="background-color: var(--color-secondary); color: var(--color-primary);"
+                aria-label="Próxima imagem"
+            >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+
+            <div class="mt-6 flex justify-center gap-2">
+                {
+                    galleryImages.map((_, index) => (
+                        <button
+                            class="gallery-dot h-2 w-2 rounded-full transition-colors"
+                            data-index={index}
+                            style="background-color: var(--color-secondary); opacity: 0.4;"
+                            aria-label={`Ir para imagem ${index + 1}`}
+                        />
+                    ))
+                }
+            </div>
         </div>
     </div>
 </section>
 
 <script>
     import { gsap } from "gsap";
-    import { ScrollTrigger } from "gsap/ScrollTrigger";
-    gsap.registerPlugin(ScrollTrigger);
 
-    requestAnimationFrame(() => {
-        const gallery = document.getElementById("gallery-scroll");
+    let currentIndex = 0;
+    let galleryItems: NodeListOf<Element>;
+
+    const initCarousel = () => {
+        const gallery = document.getElementById("gallery-carousel");
         if (!gallery) return;
 
-        const track = gallery.querySelector(".gallery-track");
-        if (!track) return;
+        galleryItems = gallery.querySelectorAll(".gallery-item");
+        if (galleryItems.length === 0) return;
 
-        const applyCenterPadding = () => {
-            const firstCard = track.querySelector("figure");
-            if (!firstCard) return;
+        const prevBtn = gallery.querySelector("#prev-btn");
+        const nextBtn = gallery.querySelector("#next-btn");
+        const dots = gallery.querySelectorAll(".gallery-dot");
 
-            const viewportWidth = gallery.clientWidth;
-            const cardWidth = firstCard.getBoundingClientRect().width;
-            const padding = Math.max((viewportWidth - cardWidth) / 2, 24);
+        const updateCarousel = () => {
+            galleryItems.forEach((item, index) => {
+                const opacity = index === currentIndex ? 1 : 0;
+                gsap.to(item, { opacity, duration: 0.3, ease: "power2.inOut" });
+            });
 
-            track.style.paddingLeft = `${padding}px`;
-            track.style.paddingRight = `${padding}px`;
+            dots.forEach((dot, index) => {
+                const opacity = index === currentIndex ? 1 : 0.4;
+                gsap.to(dot, { opacity, duration: 0.3 });
+            });
         };
 
-        const getScrollLength = () => track.scrollWidth - gallery.clientWidth;
+        const goToImage = (index: number) => {
+            currentIndex = (index + galleryItems.length) % galleryItems.length;
+            updateCarousel();
+        };
 
-        applyCenterPadding();
+        prevBtn?.addEventListener("click", () => goToImage(currentIndex - 1));
+        nextBtn?.addEventListener("click", () => goToImage(currentIndex + 1));
 
-        gsap.to(track, {
-            x: () => -getScrollLength(),
-            ease: "none",
-            scrollTrigger: {
-                trigger: gallery,
-                start: "top top",
-                end: () => "+=" + getScrollLength(),
-                pin: true,
-                scrub: 0.6,
-                invalidateOnRefresh: true,
-                onRefresh: applyCenterPadding,
-            },
+        dots.forEach((dot, index) => {
+            dot.addEventListener("click", () => goToImage(index));
         });
 
-        ScrollTrigger.addEventListener("refreshInit", () => {
-            track.style.removeProperty("transform");
-            applyCenterPadding();
-        });
+        // Initialize first image as visible
+        updateCarousel();
+    };
 
-        window.addEventListener("resize", () => ScrollTrigger.refresh());
-    });
+    // Initialize on page load and handle navigation
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initCarousel);
+    } else {
+        initCarousel();
+    }
 </script>

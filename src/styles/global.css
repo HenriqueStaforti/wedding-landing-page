@@ -139,4 +139,51 @@
             var(--color-text-light) 30%
         );
     }
+
+    /* GiftCard Styles */
+    .gift-card {
+        border: 1px solid
+            color-mix(in srgb, var(--color-secondary), transparent 40%);
+        box-shadow: var(--shadow-card);
+        backdrop-filter: blur(6px);
+        background: color-mix(in srgb, var(--color-secondary) 8%, transparent);
+        transition:
+            box-shadow 0.3s ease,
+            transform 0.3s ease,
+            border-color 0.3s ease;
+    }
+
+    .gift-card:is(:hover, :focus-within) {
+        transform: translateY(-4px);
+        box-shadow: 0 32px 70px
+            color-mix(in srgb, var(--color-secondary), transparent 65%);
+    }
+
+    .gift-card:is(:hover, :focus-within) .gift-card__glow {
+        opacity: 1;
+    }
+
+    .gift-card__avatar {
+        box-shadow: 0 18px 35px
+            color-mix(in srgb, var(--color-secondary), transparent 75%);
+        border: 2px solid color-mix(in srgb, var(--color-secondary), white 40%);
+    }
+
+    .gift-card__title {
+        color: var(--color-secondary);
+    }
+
+    .gift-card__subtitle {
+        color: var(--color-primary);
+        letter-spacing: 0.2em;
+    }
+
+    .gift-card__body,
+    .gift-card__footer {
+        color: color-mix(
+            in srgb,
+            var(--color-secondary) 70%,
+            var(--color-text-light) 30%
+        );
+    }
 }
