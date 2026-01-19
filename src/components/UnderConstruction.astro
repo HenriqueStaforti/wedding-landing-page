@@ -1,0 +1,235 @@
+---
+import { Image } from "astro:assets";
+import wedImage from "../assets/wedshots/guishaitapume.jpeg";
+import { getEventData } from "../data/eventData";
+
+const { countdown, hero } = getEventData();
+const eventDate = countdown.target;
+const eventLocation = countdown.location;
+---
+
+<section
+    class="relative min-h-screen w-full overflow-hidden"
+    style="
+        background-color: var(--color-primary);
+        color: var(--color-secondary);
+    "
+>
+    <!-- Background Image -->
+    <div
+        class="absolute inset-0 bg-cover bg-center opacity-40"
+        style={`background-image: url(${wedImage.src});`}
+    ></div>
+
+    <!-- Conteúdo -->
+    <div class="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 py-12">
+        <div class="mx-auto max-w-3xl text-center">
+            <!-- Ícone de Construção Animado -->
+            <!-- <div class="mb-8 inline-block">
+                <div
+                    class="construction-icon text-6xl animate-bounce"
+                    style="animation-duration: 2s;"
+                >
+                    🏗️
+                </div>
+            </div> -->
+
+            <!-- Heading -->
+            <h1
+                class="mb-4 font-display text-5xl font-bold uppercase tracking-tight sm:text-6xl lg:text-7xl"
+                style="color: var(--color-secondary);"
+            >
+                Estamos Preparando Tudo!
+            </h1>
+
+            <!-- Subheading com Piada -->
+            <p
+                class="mb-8 text-xl sm:text-2xl font-semibold"
+                style="color: var(--color-secondary); opacity: 0.9;"
+            >
+                Assim como nosso relacionamento,<br /> essa lista de presentes ainda está em construção 😄
+            </p>
+
+            <p
+                class="mb-12 text-base sm:text-lg"
+                style="color: var(--color-secondary); opacity: 0.75;"
+            >
+                Mas não se preocupe! Estamos finalizando tudo para tornar essa experiência perfeita para vocês.
+                Enquanto isso, vejam quanto tempo falta para o grande dia...
+            </p>
+
+            <!-- Countdown Timer -->
+            <div
+                class="mb-16 rounded-3xl p-8"
+                style="
+                    background: color-mix(in srgb, var(--color-secondary) 8%, transparent);
+                    border: 2px solid var(--color-secondary);
+                    border-opacity: 0.3;
+                "
+            >
+                <p
+                    class="mb-8 text-sm uppercase tracking-[0.3em]"
+                    style="color: var(--color-secondary); opacity: 0.7;"
+                >
+                    Contagem regressiva
+                </p>
+
+                <div
+                    class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+                    data-countdown
+                    data-countdown-target={eventDate}
+                >
+                    <div
+                        class="rounded-2xl border px-4 py-6 sm:px-6 sm:py-8"
+                        style="
+                            border-color: var(--color-secondary);
+                            background: color-mix(in srgb, var(--color-secondary) 5%, transparent);
+                        "
+                    >
+                        <p
+                            class="text-xs uppercase tracking-[0.3em] sm:text-sm"
+                            style="color: var(--color-secondary); opacity: 0.7;"
+                        >
+                            Dias
+                        </p>
+                        <p
+                            class="font-display text-4xl sm:text-5xl"
+                            style="color: var(--color-secondary);"
+                            data-days
+                        >
+                            --
+                        </p>
+                    </div>
+                    <div
+                        class="rounded-2xl border px-4 py-6 sm:px-6 sm:py-8"
+                        style="
+                            border-color: var(--color-secondary);
+                            background: color-mix(in srgb, var(--color-secondary) 5%, transparent);
+                        "
+                    >
+                        <p
+                            class="text-xs uppercase tracking-[0.3em] sm:text-sm"
+                            style="color: var(--color-secondary); opacity: 0.7;"
+                        >
+                            Horas
+                        </p>
+                        <p
+                            class="font-display text-4xl sm:text-5xl"
+                            style="color: var(--color-secondary);"
+                            data-hours
+                        >
+                            --
+                        </p>
+                    </div>
+                    <div
+                        class="rounded-2xl border px-4 py-6 sm:px-6 sm:py-8"
+                        style="
+                            border-color: var(--color-secondary);
+                            background: color-mix(in srgb, var(--color-secondary) 5%, transparent);
+                        "
+                    >
+                        <p
+                            class="text-xs uppercase tracking-[0.3em] sm:text-sm"
+                            style="color: var(--color-secondary); opacity: 0.7;"
+                        >
+                            Minutos
+                        </p>
+                        <p
+                            class="font-display text-4xl sm:text-5xl"
+                            style="color: var(--color-secondary);"
+                            data-minutes
+                        >
+                            --
+                        </p>
+                    </div>
+                    <div
+                        class="rounded-2xl border px-4 py-6 sm:px-6 sm:py-8"
+                        style="
+                            border-color: var(--color-secondary);
+                            background: color-mix(in srgb, var(--color-secondary) 5%, transparent);
+                        "
+                    >
+                        <p
+                            class="text-xs uppercase tracking-[0.3em] sm:text-sm"
+                            style="color: var(--color-secondary); opacity: 0.7;"
+                        >
+                            Segundos
+                        </p>
+                        <p
+                            class="font-display text-4xl sm:text-5xl"
+                            style="color: var(--color-secondary);"
+                            data-seconds
+                        >
+                            --
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Localização -->
+            <div
+                class="text-sm uppercase tracking-[0.2em]"
+                style="color: var(--color-secondary); opacity: 0.8;"
+            >
+                {eventLocation}
+            </div>
+
+            <!-- Construção Animada (decorativa) -->
+            <div class="mt-16 flex justify-center gap-4 text-4xl">
+                <span class="animate-spin" style="animation-duration: 3s;">🔨</span>
+                <span class="animate-bounce">📐</span>
+                <span class="animate-spin" style="animation-duration: 3s; animation-direction: reverse;">🔩</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="module">
+    const initCountdown = () => {
+        const root = document.querySelector("[data-countdown]");
+        if (!root) {
+            return;
+        }
+
+        const targetDate = root.dataset.countdownTarget;
+        if (!targetDate) {
+            return;
+        }
+
+        const pad = (value) => String(value).padStart(2, "0");
+        const targets = {
+            days: root.querySelector("[data-days]"),
+            hours: root.querySelector("[data-hours]"),
+            minutes: root.querySelector("[data-minutes]"),
+            seconds: root.querySelector("[data-seconds]"),
+        };
+
+        let timer;
+
+        const updateCountdown = () => {
+            const now = Date.now();
+            const eventTime = new Date(targetDate).getTime();
+            const remaining = Math.max(eventTime - now, 0);
+
+            const seconds = Math.floor(remaining / 1000);
+            const days = Math.floor(seconds / 86400);
+            const hours = Math.floor((seconds % 86400) / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+
+            if (targets.days) targets.days.textContent = pad(days);
+            if (targets.hours) targets.hours.textContent = pad(hours);
+            if (targets.minutes) targets.minutes.textContent = pad(minutes);
+            if (targets.seconds) targets.seconds.textContent = pad(secs);
+
+            if (remaining <= 0) {
+                clearInterval(timer);
+            }
+        };
+
+        updateCountdown();
+        timer = setInterval(updateCountdown, 1000);
+    };
+
+    initCountdown();
+</script>

@@ -67,6 +67,7 @@ export interface EventContent {
   schedule: ScheduleContent;
   gallery: GalleryContent;
   cards: CardContent[];
+  giftCard: CardContent;
   countdown: CountdownContent;
 }
 

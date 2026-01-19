@@ -113,11 +113,17 @@ cards:
     description: "Veja nossa lista de desejos e nos ajude a começar essa nova fase sem precisar dormir no chão."
     href: "/wishlist"
 
+giftCard:
+  imageAlt: "Lista de Presentes"
+  title: "Lista de Presentes"
+  description: "Veja nossa lista de desejos e nos ajude a começar essa nova fase sem precisar dormir no chão."
+  href: "/wishlist"
+
 countdown:
   label: "Contagem Regressiva para o Casório"
   heading: 'Contagem para o "Sim, eu aceito"'
   message: >
     Cada dia que passa nos aproxima do momento em que vamos todos nos reunir.
     Marquem na agenda e se preparem — vai ser inesquecível (ou pelo menos a ressaca vai ser).
-  target: "2026-06-21T21:00:00Z"
-  location: "Cidade do México • La Casa Azul"
+  target: "2026-09-27T10:00:00Z"
+  location: "Erechim • Chácara Qualitá"
