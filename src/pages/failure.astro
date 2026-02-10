@@ -1,0 +1,294 @@
+---
+export const prerender = false;
+
+import Layout from "../layouts/Layout.astro";
+
+// Capturar parâmetros da query string
+const collection_id = Astro.url.searchParams.get('collection_id');
+const collection_status = Astro.url.searchParams.get('collection_status');
+const payment_id = Astro.url.searchParams.get('payment_id');
+const external_reference = Astro.url.searchParams.get('external_reference');
+const payment_type = Astro.url.searchParams.get('payment_type');
+const merchant_order_id = Astro.url.searchParams.get('merchant_order_id');
+const preference_id = Astro.url.searchParams.get('preference_id');
+
+console.log('URL completa:', Astro.url.toString());
+console.log('Parâmetros capturados:', { collection_id, collection_status, payment_id, external_reference, payment_type, merchant_order_id, preference_id });
+---
+
+<Layout title="Pagamento Recusado">
+  <section class="payment-result failure-section">
+    <div class="container">
+      <div class="result-card failure-card">
+        <div class="result-icon failure-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="15" y1="9" x2="9" y2="15"></line>
+            <line x1="9" y1="9" x2="15" y2="15"></line>
+          </svg>
+        </div>
+        
+        <h1 class="result-title">Oops! Pagamento Recusado</h1>
+        
+        <p class="result-message">
+          Infelizmente, sua transação foi recusada. Por favor, verifique seus dados e tente novamente.
+        </p>
+
+        <div class="payment-details">
+          <h3>Detalhes da Transação</h3>
+          
+          {payment_id && (
+            <div class="detail-item">
+              <span class="label">ID do Pagamento:</span>
+              <span class="value">{payment_id}</span>
+            </div>
+          )}
+          
+          {external_reference && (
+            <div class="detail-item">
+              <span class="label">Presente:</span>
+              <span class="value">{external_reference}</span>
+            </div>
+          )}
+          
+          {payment_type && (
+            <div class="detail-item">
+              <span class="label">Forma de Pagamento:</span>
+              <span class="value">{payment_type.replace('_', ' ')}</span>
+            </div>
+          )}
+          
+          {collection_status && (
+            <div class="detail-item">
+              <span class="label">Status:</span>
+              <span class="value failure-status">{collection_status}</span>
+            </div>
+          )}
+        </div>
+
+        <div class="error-reasons">
+          <h3>Possíveis Razões:</h3>
+          <ul>
+            <li>Dados do cartão incorretos</li>
+            <li>Saldo insuficiente</li>
+            <li>Cartão expirado ou bloqueado</li>
+            <li>Limite de crédito atingido</li>
+          </ul>
+        </div>
+
+        <div class="action-buttons">
+          <a href="/wishlist" class="btn btn-primary">Tentar Novamente</a>
+          <a href="/" class="btn btn-secondary">Voltar à Página Inicial</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .payment-result {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .failure-section {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  }
+
+  .container {
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .result-card {
+    background: white;
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    animation: slideUp 0.6s ease-out;
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .result-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+
+  .failure-icon {
+    background: #ef4444;
+    color: white;
+  }
+
+  .failure-icon svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .result-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #1f2937;
+  }
+
+  .result-message {
+    font-size: 1.1rem;
+    color: #6b7280;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .payment-details {
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    text-align: left;
+  }
+
+  .payment-details h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 1rem;
+  }
+
+  .detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .detail-item:last-child {
+    border-bottom: none;
+  }
+
+  .label {
+    font-weight: 500;
+    color: #6b7280;
+  }
+
+  .value {
+    color: #1f2937;
+    font-weight: 600;
+    word-break: break-all;
+  }
+
+  .failure-status {
+    color: #ef4444;
+  }
+
+  .error-reasons {
+    background: #fef2f2;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    text-align: left;
+    border-left: 4px solid #ef4444;
+  }
+
+  .error-reasons h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #7f1d1d;
+    margin-bottom: 1rem;
+  }
+
+  .error-reasons ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .error-reasons li {
+    padding: 0.5rem 0;
+    color: #7f1d1d;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+
+  .error-reasons li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(245, 87, 108, 0.4);
+  }
+
+  .btn-secondary {
+    background: white;
+    color: #f5576c;
+    border: 2px solid #f5576c;
+  }
+
+  .btn-secondary:hover {
+    background: #f5576c;
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 600px) {
+    .result-card {
+      padding: 2rem 1.5rem;
+    }
+
+    .result-title {
+      font-size: 1.5rem;
+    }
+
+    .action-buttons {
+      flex-direction: column;
+    }
+
+    .btn {
+      width: 100%;
+    }
+  }
+</style>

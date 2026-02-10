@@ -9,6 +9,7 @@ wishlist:
       description: "Para preparar receitas deliciosas juntos"
       category: "Cozinha"
       price: "R$ 2.499"
+      priceInCents: 249900
       image: "/gifts/kitchen-aid.jpg"
       imageAlt: "Batedeira KitchenAid vermelha"
       priority: "high"
@@ -17,6 +18,7 @@ wishlist:
       description: "Para começar nossas manhãs com energia"
       category: "Cozinha"
       price: "R$ 1.899"
+      priceInCents: 189900
       image: "/gifts/coffee-machine.jpg"
       imageAlt: "Máquina de café expresso"
       priority: "high"
@@ -25,6 +27,7 @@ wishlist:
       description: "Conjunto completo em aço inox"
       category: "Cozinha"
       price: "R$ 1.299"
+      priceInCents: 129900
       image: "/gifts/cookware.jpg"
       imageAlt: "Conjunto de panelas em aço inox"
       priority: "medium"
@@ -33,6 +36,7 @@ wishlist:
       description: "Lençóis 400 fios em algodão egípcio"
       category: "Quarto"
       price: "R$ 899"
+      priceInCents: 89900
       image: "/gifts/bedding.jpg"
       imageAlt: "Jogo de cama branco"
       priority: "medium"
@@ -41,6 +45,7 @@ wishlist:
       description: "Kit completo para o banheiro"
       category: "Banheiro"
       price: "R$ 459"
+      priceInCents: 45900
       image: "/gifts/towels.jpg"
       imageAlt: "Jogo de toalhas"
       priority: "low"
@@ -49,6 +54,7 @@ wishlist:
       description: "Conjunto para 8 pessoas em porcelana"
       category: "Cozinha"
       price: "R$ 799"
+      priceInCents: 79900
       image: "/gifts/dinnerware.jpg"
       imageAlt: "Aparelho de jantar em porcelana"
       priority: "medium"
@@ -57,6 +63,7 @@ wishlist:
       description: "Para manter a casa sempre limpa"
       category: "Casa"
       price: "R$ 2.199"
+      priceInCents: 219900
       image: "/gifts/vacuum.jpg"
       imageAlt: "Aspirador robô"
       priority: "high"
@@ -65,6 +72,7 @@ wishlist:
       description: "Fritadeira elétrica sem óleo"
       category: "Cozinha"
       price: "R$ 599"
+      priceInCents: 59900
       image: "/gifts/airfryer.jpg"
       imageAlt: "Air fryer"
       priority: "low"
@@ -73,6 +81,7 @@ wishlist:
       description: "Conjunto de cristal para celebrar"
       category: "Cozinha"
       price: "R$ 349"
+      priceInCents: 34900
       image: "/gifts/wine-glasses.jpg"
       imageAlt: "Taças de vinho em cristal"
       priority: "low"
@@ -81,6 +90,7 @@ wishlist:
       description: "Contribua para nossa viagem dos sonhos"
       category: "Experiência"
       price: "Qualquer valor"
+      priceInCents: 0
       image: "/gifts/honeymoon.jpg"
       imageAlt: "Viagem de lua de mel"
       priority: "high"
@@ -89,6 +99,7 @@ wishlist:
       description: "Talheres em aço inox para 12 pessoas"
       category: "Cozinha"
       price: "R$ 699"
+      priceInCents: 69900
       image: "/gifts/cutlery.jpg"
       imageAlt: "Faqueiro em aço inox"
       priority: "medium"
@@ -97,6 +108,7 @@ wishlist:
       description: "Potente para sucos e vitaminas"
       category: "Cozinha"
       price: "R$ 399"
+      priceInCents: 39900
       image: "/gifts/blender.jpg"
       imageAlt: "Liquidificador"
       priority: "low"
