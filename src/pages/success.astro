@@ -1,4 +1,6 @@
 ---
+export const prerender = false;
+
 import Layout from "../layouts/Layout.astro";
 
 // Capturar parâmetros da query string
@@ -79,7 +81,7 @@ const preference_id = Astro.url.searchParams.get('preference_id');
   }
 
   .success-section {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-color: var(--color-primary);
   }
 
   .container {
@@ -131,28 +133,29 @@ const preference_id = Astro.url.searchParams.get('preference_id');
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    color: #1f2937;
+    color: var(--color-primary);
   }
 
   .result-message {
     font-size: 1.1rem;
-    color: #6b7280;
+    color: var(--color-text);
     margin-bottom: 2rem;
     line-height: 1.6;
   }
 
   .payment-details {
-    background: #f9fafb;
+    background: color-mix(in srgb, var(--color-accent) 10%, transparent);
     border-radius: 12px;
     padding: 1.5rem;
     margin: 2rem 0;
     text-align: left;
+    border-left: 4px solid var(--color-accent);
   }
 
   .payment-details h3 {
     font-size: 1rem;
     font-weight: 600;
-    color: #374151;
+    color: var(--color-secondary);
     margin-bottom: 1rem;
   }
 
@@ -170,11 +173,11 @@ const preference_id = Astro.url.searchParams.get('preference_id');
 
   .label {
     font-weight: 500;
-    color: #6b7280;
+    color: var(--color-primary);
   }
 
   .value {
-    color: #1f2937;
+    color: var(--color-primary);
     font-weight: 600;
     word-break: break-all;
   }
@@ -202,23 +205,24 @@ const preference_id = Astro.url.searchParams.get('preference_id');
   }
 
   .btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
   }
 
   .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    opacity: 0.9;
   }
 
   .btn-secondary {
     background: white;
-    color: #667eea;
-    border: 2px solid #667eea;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
   }
 
   .btn-secondary:hover {
-    background: #667eea;
+    background: var(--color-primary);
     color: white;
     transform: translateY(-2px);
   }

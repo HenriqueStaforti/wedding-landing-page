@@ -2,9 +2,7 @@ hero:
   tagline: "O casamento do Guilherme e da Schaiane!"
   title: "disseram sim!"
   description: >
-    Uma festa épica no coração da cidade — flores exageradas, vinil até de madrugada,
-    e uma lista de convidados cheia de gente que a gente realmente gosta (vocês passaram no filtro).
-    Venham pelos votos, fiquem pelo open bar e pelas fofocas do casamento.
+    Esperamos vocês na Chácara Qualitá! (Orem/Rezem para não chover).
   weekday: "Domingo"
   dateDisplay: "27 · 09 · 2026"
   location: "Erechim • Chácara Qualitá"
@@ -31,53 +29,33 @@ schedule:
     Acompanhe cada momento com a gente — dos votos até o último brinde, quando ninguém mais lembra o próprio nome.
   events:
     - number: "01"
-      label: "Cerimônia"
-      title: "Cerimônia & Votos"
+      label: "Chegada"
+      title: "Chegada dos Convidados"
       description: >
-        Reúnam-se no gramado da capela para uma cerimônia íntima sob as oliveiras.
-        Preparem os lencinhos — ou finjam que é alergia, a gente entende.
+        Chegada dos convidados.
       details:
-        - "Música ambiente começa às 15:40"
-        - "Alianças e votos na hora dourada (pra foto ficar linda)"
-        - "Transporte discreto a partir das 15:15 (pra quem não sabe chegar)"
+        - "10:30"
     - number: "02"
-      label: "Recepção"
-      title: "Hora do Coquetel no Jardim"
+      label: "Cerimônia"
+      title: "Início da Cerimônia"
       description: >
-        Bebam drinks de estação, curtam jazz ao vivo e façam networking amoroso sob as luzinhas.
-        É aqui que a fofoca começa a rolar solta.
+        Início da cerimônia.
       details:
-        - "Drink da casa: Paloma de Lavanda (chique, né?)"
-        - "Trio de cordas aceitando pedidos (menos Despacito)"
-        - "Canapés servidos pelo jardim (corra antes que acabem)"
+        - "11:00"
     - number: "03"
-      label: "Jantar"
-      title: "Recepção à Luz de Velas"
+      label: "Refeição"
+      title: "Brunch"
       description: >
-        Saboreiem um banquete da fazenda para a mesa, harmonizado com vinhos selecionados,
-        enquanto brindes emocionados (e constrangedores) tomam conta do salão.
+        Brunch.
       details:
-        - "Chamada para o jantar às 18:25 (fome é seu problema até lá)"
-        - "Brindes começam após o segundo prato (preparem os discursos)"
-        - "Trio de sobremesas servido às 20:10 (sim, são três)"
+        - "12:00"
     - number: "04"
       label: "Festa"
-      title: "Primeira Dança & Baile"
+      title: "Dança dos Noivos e Abertura de pista"
       description: >
-        Comecem a dançar com nossa primeira dança, depois se joguem na pista
-        com DJ ao vivo, fotos constrangedoras e lanchinhos de madrugada.
+        Dança dos noivos e abertura de pista.
       details:
-        - "Primeira dança às 20:50 (vamos fingir que ensaiamos)"
-        - "Lounge de sobremesas abre às 21:30 (segunda rodada)"
-        - "Cabine de fotos até 23:30 (guardem as evidências)"
-    - number: "05"
-      label: "Despedida"
-      title: "Saída com Sparklers"
-      description: >
-        Encerrem a noite com uma despedida brilhante e um último brinde ao futuro.
-        Depois disso, a ressaca é por conta de vocês.
-      details:
-        - "Peguem um sparkler no portão do jardim"
+        - "14:00"
         - "Brinde final às 23:55 (o último, prometemos)"
         - "Último transporte às 00:30 (quem perder, Uber)"
 
@@ -124,6 +102,6 @@ countdown:
   heading: 'Contagem para o "Sim, eu aceito"'
   message: >
     Cada dia que passa nos aproxima do momento em que vamos todos nos reunir.
-    Marquem na agenda e se preparem — vai ser inesquecível (ou pelo menos a ressaca vai ser).
+    Marquem na agenda e se preparem, vai ser inesquecível.
   target: "2026-09-27T10:00:00Z"
   location: "Erechim • Chácara Qualitá"
