@@ -54,106 +54,18 @@
       </div>
     </div>
 
-    <!-- Payment Options Tabs -->
-    <div class="border-b flex-shrink-0" style="border-color: color-mix(in srgb, var(--color-primary), transparent 80%);">
-      <div class="flex">
-        <button
-          id="pix-tab"
-          class="flex-1 border-b-2 px-6 py-4 font-semibold transition-colors"
-          style="border-color: var(--color-accent); color: var(--color-accent);"
-        >
-          PIX
-        </button>
-        <button
-          id="card-tab"
-          class="flex-1 border-b-2 px-6 py-4 font-semibold transition-colors"
-          style="border-color: transparent; color: color-mix(in srgb, var(--color-primary), transparent 50%);"
-        >
-          Cartão
-        </button>
-      </div>
-    </div>
-
     <!-- Content -->
     <div class="overflow-y-auto flex-1">
       <div class="p-8">
-      <!-- PIX Payment -->
-      <div id="pix-content" class="block">
+      <!-- Payment via Mercado Pago -->
+      <!-- Payment via Mercado Pago -->
+      <div id="payment-content" class="block">
         <div class="text-center">
           <h3
-            class="mb-6 text-xl font-semibold"
+            class="mb-6 text-2xl font-semibold"
             style="color: var(--color-primary);"
           >
-            Pagar com PIX
-          </h3>
-
-          <!-- QR Code Container -->
-          <div class="mb-6 flex justify-center">
-            <div
-              class="rounded-lg p-4"
-              style="background-color: var(--color-background);"
-            >
-              <img
-                id="qr-code"
-                src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=00020126580014br.bcb.brcode01051.0.063047A33DB57F6554CBF4B3F5D6E9D80520400005303986540510.005802BR5913CASAL TESTE6009SAO PAULO62410503***63041D3D"
-                alt="QR Code PIX"
-                class="h-48 w-48"
-              />
-            </div>
-          </div>
-
-          <!-- Amount Display -->
-          <div class="mb-6">
-            <p
-              class="mb-2 text-sm"
-              style="color: color-mix(in srgb, var(--color-primary), transparent 50%);"
-            >
-              Valor a transferir:
-            </p>
-            <p
-              id="pix-amount"
-              class="text-3xl font-bold"
-              style="color: var(--color-accent);"
-            >
-              R$ 0,00
-            </p>
-          </div>
-
-          <!-- Instructions -->
-          <div
-            class="rounded-lg p-4"
-            style="background-color: color-mix(in srgb, var(--color-accent), transparent 90%);"
-          >
-            <p
-              class="text-sm leading-relaxed"
-              style="color: color-mix(in srgb, var(--color-accent), var(--color-primary));"
-            >
-              1. Abra o aplicativo do seu banco<br />
-              2. Selecione a opção PIX<br />
-              3. Escaneie o QR Code acima ou copie a chave<br />
-              4. Confirme os dados e digite sua senha
-            </p>
-          </div>
-
-          <!-- Copy Button (for manual entry) -->
-          <button
-            id="copy-pix-key"
-            class="mt-6 w-full rounded-lg px-6 py-3 font-semibold transition-all duration-200"
-            style="background-color: var(--color-accent); color: var(--color-text-light);"
-          >
-            Copiar Chave PIX
-          </button>
-        </div>
-      </div>
-
-      <!-- Card Payment -->
-      <div id="card-content" class="hidden">
-        <div class="text-center">
-          <h3
-            class="mb-6 text-xl font-semibold"
-            style="color: var(--color-primary);"
-          >
-            Pagar com Cartão
+            Finalizar Pagamento
           </h3>
 
           <!-- Information -->
@@ -165,8 +77,7 @@
               class="text-sm"
               style="color: color-mix(in srgb, var(--color-accent), var(--color-primary));"
             >
-              Você será redirecionado para um ambiente seguro do Mercado Pago para
-              completar seu pagamento.
+              Você será redirecionado para um ambiente seguro do Mercado Pago para completar seu pagamento de forma rápida e segura.
             </p>
           </div>
 
@@ -179,7 +90,7 @@
               Valor a pagar:
             </p>
             <p
-              id="card-amount"
+              id="payment-amount"
               class="text-3xl font-bold"
               style="color: var(--color-accent);"
             >
@@ -223,14 +134,8 @@
 
   const modal = document.getElementById("payment-modal");
   const closeBtn = document.getElementById("close-modal-btn");
-  const pixTab = document.getElementById("pix-tab");
-  const cardTab = document.getElementById("card-tab");
-  const pixContent = document.getElementById("pix-content");
-  const cardContent = document.getElementById("card-content");
   const mercadoPagoBtn = document.getElementById("mercado-pago-btn");
   const loadingState = document.getElementById("loading-state");
-  const copyBtn = document.getElementById("copy-pix-key");
-  const pixKey = "00020126580014br.bcb.brcode01051.0.063047A33DB57F6554CBF4B3F5D6E9D80520400005303986540510.005802BR5913CASAL TESTE6009SAO PAULO62410503***63041D3D";
 
   // Close modal
   function closeModal() {
@@ -241,47 +146,6 @@
   modal?.addEventListener("click", (e) => {
     if (e.target === modal) {
       closeModal();
-    }
-  });
-
-  // Tab switching
-  pixTab?.addEventListener("click", () => {
-    pixContent?.classList.remove("hidden");
-    cardContent?.classList.add("hidden");
-    if (pixTab) {
-      pixTab.style.borderColor = "var(--color-accent)";
-      pixTab.style.color = "var(--color-accent)";
-    }
-    if (cardTab) {
-      cardTab.style.borderColor = "transparent";
-      cardTab.style.color = "color-mix(in srgb, var(--color-primary), transparent 50%)";
-    }
-  });
-
-  cardTab?.addEventListener("click", () => {
-    pixContent?.classList.add("hidden");
-    cardContent?.classList.remove("hidden");
-    if (cardTab) {
-      cardTab.style.borderColor = "var(--color-accent)";
-      cardTab.style.color = "var(--color-accent)";
-    }
-    if (pixTab) {
-      pixTab.style.borderColor = "transparent";
-      pixTab.style.color = "color-mix(in srgb, var(--color-primary), transparent 50%)";
-    }
-  });
-
-  // Copy PIX key
-  copyBtn?.addEventListener("click", async () => {
-    try {
-      await navigator.clipboard.writeText(pixKey);
-      const originalText = copyBtn.textContent;
-      copyBtn.textContent = "✓ Copiado!";
-      setTimeout(() => {
-        copyBtn.textContent = originalText;
-      }, 2000);
-    } catch (err) {
-      console.error("Falha ao copiar:", err);
     }
   });
 
@@ -349,13 +213,11 @@
     // Update modal content
     const titleElement = document.getElementById("modal-title");
     const priceElement = document.getElementById("modal-price");
-    const pixAmountElement = document.getElementById("pix-amount");
-    const cardAmountElement = document.getElementById("card-amount");
+    const paymentAmountElement = document.getElementById("payment-amount");
 
     if (titleElement) titleElement.textContent = title;
     if (priceElement) priceElement.textContent = formattedPrice;
-    if (pixAmountElement) pixAmountElement.textContent = formattedPrice;
-    if (cardAmountElement) cardAmountElement.textContent = formattedPrice;
+    if (paymentAmountElement) paymentAmountElement.textContent = formattedPrice;
 
     // Reset button state
     mercadoPagoBtn!.style.display = "block";
