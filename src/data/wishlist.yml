@@ -131,8 +131,8 @@ wishlist:
       imageAlt: "Ajuda para a nossa aposentadoria"
       priority: "medium"
     - id: "children-request-tax"
-      title: "Taxa para Poder Pedir"
-      description: "Quando vierem os filhos, você terá direito a pedir favores"
+      title: "Direito de Perguntar sobre os Filhos"
+      description: "Direito de fazer a pergunta: 'Quando virão os filhos?'"
       category: "Experiência"
       price: "R$ 774,00"
       priceInCents: 77400
