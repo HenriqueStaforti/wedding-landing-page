@@ -14,20 +14,24 @@ const preference_id = Astro.url.searchParams.get('preference_id');
 ---
 
 <Layout title="Pagamento Pendente">
-  <section class="payment-result pending-section">
+  <section 
+    class="payment-result pending-section"
+    data-collection-id={collection_id}
+    data-payment-type={payment_type}
+  >
     <div class="container">
       <div class="result-card pending-card">
-        <div class="result-icon pending-icon">
+        <div class="result-icon pending-icon" id="status-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="10"></circle>
             <polyline points="12 6 12 12 16 14"></polyline>
           </svg>
         </div>
         
-        <h1 class="result-title">Pagamento Pendente</h1>
+        <h1 class="result-title" id="status-title">Pagamento Pendente</h1>
         
-        <p class="result-message">
-          Seu pagamento está sendo processado. Este pode ser o caso de transferências bancárias ou PayPal pendente de confirmação.
+        <p class="result-message" id="status-message">
+          Seu pagamento está sendo processado. Este pode ser o caso de pagamentos via Boleto ou parcelado em 2 Cartões pendente de confirmação.
         </p>
 
         <div class="payment-details">
@@ -57,12 +61,12 @@ const preference_id = Astro.url.searchParams.get('preference_id');
           {collection_status && (
             <div class="detail-item">
               <span class="label">Status:</span>
-              <span class="value pending-status">{collection_status}</span>
+              <span class="value pending-status" id="status-badge">{collection_status}</span>
             </div>
           )}
         </div>
 
-        <div class="pending-info">
+        <!-- <div class="pending-info" id="status-info">
           <h3>O que Acontece Agora?</h3>
           <ul>
             <li>Seu pagamento está sendo validado pela instituição financeira</li>
@@ -70,7 +74,7 @@ const preference_id = Astro.url.searchParams.get('preference_id');
             <li>Este processo pode levar alguns minutos ou até 24 horas, dependendo do banco</li>
             <li>Enquanto isso, seu presente já fica registrado em nossa lista</li>
           </ul>
-        </div>
+        </div> -->
 
         <div class="action-buttons">
           <a href="/" class="btn btn-primary">Voltar à Página Inicial</a>
@@ -91,6 +95,10 @@ const preference_id = Astro.url.searchParams.get('preference_id');
   }
 
   .pending-section {
+    background-color: var(--color-primary);
+  }
+
+  .success-section {
     background-color: var(--color-primary);
   }
 
@@ -149,6 +157,17 @@ const preference_id = Astro.url.searchParams.get('preference_id');
     height: 40px;
   }
 
+  .success-icon {
+    background: #10b981;
+    color: white;
+    animation: none;
+  }
+
+  .success-icon svg {
+    width: 40px;
+    height: 40px;
+  }
+
   .result-title {
     font-size: 2rem;
     font-weight: 700;
@@ -175,7 +194,6 @@ const preference_id = Astro.url.searchParams.get('preference_id');
   .payment-details h3 {
     font-size: 1rem;
     font-weight: 600;
-    color: var(--color-secondary);
     margin-bottom: 1rem;
   }
 
@@ -204,6 +222,10 @@ const preference_id = Astro.url.searchParams.get('preference_id');
 
   .pending-status {
     color: #f59e0b;
+  }
+
+  .success-status {
+    color: #10b981;
   }
 
   .pending-info {
@@ -301,3 +323,78 @@ const preference_id = Astro.url.searchParams.get('preference_id');
     }
   }
 </style>
+<script>
+  // Check PIX payment status if it's a bank_transfer
+  async function checkPixStatus() {
+    const section = document.querySelector('[data-payment-type]');
+    if (!section) return;
+
+    const paymentType = section.getAttribute('data-payment-type');
+    const collectionId = section.getAttribute('data-collection-id');
+
+    // Only check for PIX payments
+    if (paymentType !== 'bank_transfer' || !collectionId) {
+      console.log("Not a PIX payment or missing collection_id");
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/check-pix-status?collection_id=${collectionId}`);
+      
+      if (!response.ok) {
+        console.error("Failed to check PIX status:", response.statusText);
+        return;
+      }
+
+      const data = await response.json();
+      console.log("PIX Status Check Result:", data);
+
+      if (data.isApproved) {
+        updateToApprovedState(data);
+      }
+    } catch (error) {
+      console.error("Error checking PIX status:", error);
+    }
+  }
+
+  function updateToApprovedState(paymentData) {
+    // Update icon
+    const iconElement = document.getElementById('status-icon');
+    if (iconElement) {
+      iconElement.className = 'result-icon success-icon';
+      iconElement.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+    }
+
+    // Update title
+    const titleElement = document.getElementById('status-title');
+    if (titleElement) {
+      titleElement.textContent = 'Pagamento Aprovado! 🎉';
+    }
+
+    // Update message
+    const messageElement = document.getElementById('status-message');
+    if (messageElement) {
+      messageElement.textContent = 'Seu PIX foi confirmado! Obrigado por sua generosidade. Seu presente foi confirmado em nossa lista.';
+    }
+
+    // Update status badge
+    const badgeElement = document.getElementById('status-badge');
+    if (badgeElement) {
+      badgeElement.className = 'value success-status';
+      badgeElement.textContent = paymentData.status;
+    }
+
+    // Update info section
+    const infoElement = document.getElementById('status-info');
+    if (infoElement) {
+      infoElement.innerHTML = '';
+    }
+  }
+
+  // Check status on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', checkPixStatus);
+  } else {
+    checkPixStatus();
+  }
+</script>
