@@ -40,6 +40,10 @@ export async function POST({ request }: any) {
       throw new Error("MERCADO_PAGO_ACCESS_TOKEN not configured");
     }
 
+    const isSandbox = import.meta.env.MERCADO_PAGO_SANDBOX === "true";
+
+    console.log("Initializing Mercado Pago client with sandbox mode?", isSandbox);
+
     const client = new MercadoPagoConfig({
       accessToken: accessToken,
     });
@@ -80,7 +84,9 @@ export async function POST({ request }: any) {
     //console.log("Created Mercado Pago preference:", createdPreference);
 
     // Use sandbox_init_point for testing, init_point for production
-    const checkoutUrl = createdPreference.sandbox_init_point || createdPreference.init_point;
+    const checkoutUrl = isSandbox 
+      ? createdPreference.sandbox_init_point 
+      : createdPreference.init_point;
 
     if (!checkoutUrl) {
       throw new Error("No checkout URL returned from Mercado Pago");
