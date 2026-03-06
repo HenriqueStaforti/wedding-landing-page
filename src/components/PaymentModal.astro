@@ -1,0 +1,235 @@
+---
+// PaymentModal is now a shared component with client-side state management
+---
+
+<div
+  id="payment-modal"
+  class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+>
+  <div
+    class="w-full max-w-2xl rounded-2xl bg-white shadow-2xl flex flex-col max-h-[90vh]"
+    style="background-color: var(--color-secondary);"
+  >
+    <!-- Header -->
+    <div
+      class="border-b border-white/10 p-6 flex-shrink-0"
+      style="border-color: color-mix(in srgb, var(--color-primary), transparent 80%);"
+    >
+      <div class="flex items-center justify-between">
+        <div>
+          <h2
+            id="modal-title"
+            class="text-2xl font-bold"
+            style="color: var(--color-primary);"
+          >
+            Produto
+          </h2>
+          <p
+            id="modal-price"
+            class="mt-2 text-lg font-semibold"
+            style="color: var(--color-accent);"
+          >
+            R$ 0,00
+          </p>
+        </div>
+        <button
+          id="close-modal-btn"
+          class="text-gray-500 transition-colors hover:text-gray-700"
+          aria-label="Fechar modal"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M18 6l-12 12M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="overflow-y-auto flex-1">
+      <div class="p-8">
+      <!-- Payment via Mercado Pago -->
+      <!-- Payment via Mercado Pago -->
+      <div id="payment-content" class="block">
+        <div class="text-center">
+          <h3
+            class="mb-6 text-2xl font-semibold"
+            style="color: var(--color-primary);"
+          >
+            Finalizar Pagamento
+          </h3>
+
+          <!-- Information -->
+          <div
+            class="mb-6 rounded-lg p-4"
+            style="background-color: color-mix(in srgb, var(--color-accent), transparent 90%);"
+          >
+            <p
+              class="text-sm"
+              style="color: color-mix(in srgb, var(--color-accent), var(--color-primary));"
+            >
+              Você será redirecionado para um ambiente seguro do Mercado Pago para completar seu pagamento de forma rápida e segura.
+            </p>
+          </div>
+
+          <!-- Amount Display -->
+          <div class="mb-8">
+            <p
+              class="mb-2 text-sm"
+              style="color: color-mix(in srgb, var(--color-primary), transparent 50%);"
+            >
+              Valor a pagar:
+            </p>
+            <p
+              id="payment-amount"
+              class="text-3xl font-bold"
+              style="color: var(--color-accent);"
+            >
+              R$ 0,00
+            </p>
+          </div>
+
+          <!-- Mercado Pago Button -->
+          <button
+            id="mercado-pago-btn"
+            class="w-full rounded-lg px-6 py-4 font-semibold transition-all duration-200"
+            style="background-color: #009EE3; color: white; border: none; cursor: pointer;"
+          >
+            Ir para Mercado Pago
+          </button>
+
+          <!-- Loading state -->
+          <div id="loading-state" class="hidden">
+            <p
+              class="text-sm"
+              style="color: color-mix(in srgb, var(--color-primary), transparent 50%);"
+            >
+              Preparando seu pagamento...
+            </p>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Modal state
+  let currentGiftData = {
+    id: "",
+    title: "",
+    price: "",
+    priceNumber: 0,
+  };
+
+  const modal = document.getElementById("payment-modal");
+  const closeBtn = document.getElementById("close-modal-btn");
+  const mercadoPagoBtn = document.getElementById("mercado-pago-btn");
+  const loadingState = document.getElementById("loading-state");
+
+  // Close modal
+  function closeModal() {
+    modal?.classList.add("hidden");
+  }
+
+  closeBtn?.addEventListener("click", closeModal);
+  modal?.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  // Mercado Pago button handler
+  mercadoPagoBtn?.addEventListener("click", async () => {
+    mercadoPagoBtn.style.display = "none";
+    loadingState?.classList.remove("hidden");
+
+    try {
+      const response = await fetch("/api/create-preference", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          giftId: currentGiftData.id,
+          giftTitle: currentGiftData.title,
+          giftPrice: currentGiftData.priceNumber,
+        }),
+      });
+
+      console.log("PaymentModal: Response status:", response.status);
+
+      if (!response.ok) {
+        throw new Error("Falha ao criar preferência de pagamento");
+      }
+
+      const data = await response.json();
+      console.log("PaymentModal: Response data:", data);
+
+      const { checkoutUrl } = data;
+
+      if (!checkoutUrl) {
+        throw new Error("Nenhuma URL de checkout retornada");
+      }
+
+      // Redirect directly to Mercado Pago checkout URL
+      console.log("PaymentModal: Redirecting to:", checkoutUrl);
+      window.location.href = checkoutUrl;
+    } catch (error) {
+      console.error("Erro ao processar pagamento:", error);
+      alert("Erro ao processar o pagamento. Tente novamente.");
+
+      mercadoPagoBtn.style.display = "block";
+      loadingState?.classList.add("hidden");
+    }
+  });
+
+  // Expose openPaymentModal function globally
+  (window as any).openPaymentModal = (giftId: string, title: string, price: string) => {
+    // Extract numeric value from price string (e.g., "R$ 2.499" -> 2499)
+    const priceNumber = parseInt(price.replace(/\D/g, ""));
+    const formattedPrice = (priceNumber / 100).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+
+    currentGiftData = {
+      id: giftId,
+      title,
+      price,
+      priceNumber,
+    };
+
+    // Update modal content
+    const titleElement = document.getElementById("modal-title");
+    const priceElement = document.getElementById("modal-price");
+    const paymentAmountElement = document.getElementById("payment-amount");
+
+    if (titleElement) titleElement.textContent = title;
+    if (priceElement) priceElement.textContent = formattedPrice;
+    if (paymentAmountElement) paymentAmountElement.textContent = formattedPrice;
+
+    // Reset button state
+    mercadoPagoBtn!.style.display = "block";
+    loadingState?.classList.add("hidden");
+
+    // Open modal
+    modal?.classList.remove("hidden");
+  };
+</script>
+
+<style>
+  #payment-modal:not(.hidden) {
+    display: flex;
+  }
+</style>

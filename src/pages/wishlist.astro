@@ -1,8 +1,30 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import PaymentModal from "../components/PaymentModal.astro";
 import { getWishlistData } from "../data/wishlistData";
+import type { ImageMetadata } from "astro:assets";
 
 const wishlist = getWishlistData();
+
+const imageModules = import.meta.glob("../assets/gifts/**/*", {
+    eager: true,
+    import: "default",
+}) as Record<string, ImageMetadata>;
+
+const resolveGiftImage = (filename: string) => {
+    const normalized = filename.replace(/^\.?\//, "").replace(/^assets\//, "");
+
+    const match = Object.entries(imageModules).find(([path]) => {
+        const withoutPrefix = path.replace("../assets/", "");
+        return (
+            withoutPrefix === normalized ||
+            withoutPrefix.endsWith(`/${normalized}`) ||
+            path.endsWith(`/${normalized}`)
+        );
+    });
+
+    return match?.[1];
+};
 ---
 
 <Layout title="Wishlist - Guilherme & Schaiane">
@@ -55,43 +77,54 @@ const wishlist = getWishlistData();
 
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {
-                    wishlist.gifts.map((gift) => (
-                        <div
-                            class="gift-card group relative flex flex-col overflow-hidden rounded-2xl transition-all duration-300"
+                    wishlist.gifts.map((gift) => {
+                        const giftImage = resolveGiftImage(gift.image);
+                        return (
+                        <button
+                            class="gift-card group relative flex flex-col overflow-hidden rounded-2xl transition-all duration-300 text-left"
                             style="background-color: var(--color-background);"
+                            onclick={`openPaymentModal('${gift.id}', '${gift.title}', '${gift.priceInCents}')`}
                         >
                             <div
-                                class="relative h-48 w-full overflow-hidden"
+                                class="relative h-65 w-full overflow-hidden flex items-center justify-center"
                                 style="background-color: var(--color-primary);"
                             >
-                                <div class="flex h-full items-center justify-center">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="48"
-                                        height="48"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="1.5"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        style="color: var(--color-secondary);"
-                                    >
-                                        <path d="M20 12v10H4V12" />
-                                        <path d="M2 7h20v5H2z" />
-                                        <path d="M12 22V7" />
-                                        <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
-                                        <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
-                                    </svg>
-                                </div>
-                                {gift.priority === "high" && (
+                                {giftImage ? (
+                                    <img
+                                        src={giftImage.src}
+                                        alt={gift.imageAlt}
+                                        class="h-full w-full object-cover"
+                                    />
+                                ) : (
+                                    <div class="flex h-full items-center justify-center">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="48"
+                                            height="48"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="1.5"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            style="color: var(--color-secondary);"
+                                        >
+                                            <path d="M20 12v10H4V12" />
+                                            <path d="M2 7h20v5H2z" />
+                                            <path d="M12 22V7" />
+                                            <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
+                                            <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
+                                        </svg>
+                                    </div>
+                                )}
+                                {/* {gift.priority === "high" && (
                                     <span
                                         class="absolute right-3 top-3 rounded-full px-3 py-1 text-xs font-semibold"
                                         style="background-color: var(--color-accent); color: var(--color-text-light);"
                                     >
                                         Favorito
                                     </span>
-                                )}
+                                )} */}
                             </div>
                             <div class="flex flex-1 flex-col p-5">
                                 <span
@@ -121,8 +154,9 @@ const wishlist = getWishlistData();
                                     </span>
                                 </div>
                             </div>
-                        </div>
-                    ))
+                        </button>
+                        );
+                    })
                 }
             </div>
 
@@ -139,16 +173,27 @@ const wishlist = getWishlistData();
     </section>
 </Layout>
 
+<!-- Payment Modal Component -->
+<PaymentModal />
+
 <style>
     .gift-card {
         border: 1px solid
             color-mix(in srgb, var(--color-accent), transparent 60%);
         box-shadow: var(--shadow-card);
+        cursor: pointer;
     }
 
     .gift-card:hover {
         transform: translateY(-4px);
         box-shadow: 0 32px 70px
             color-mix(in srgb, var(--color-primary), transparent 65%);
+    }
+
+    .gift-card {
+        background: none;
+        border: none;
+        padding: 0;
+        font: inherit;
     }
 </style>

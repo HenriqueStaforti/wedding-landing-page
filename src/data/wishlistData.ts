@@ -7,6 +7,7 @@ export interface GiftItem {
   description?: string;
   category?: string;
   price?: string;
+  priceInCents?: number;
   image?: string;
   imageAlt?: string;
   priority?: "high" | "medium" | "low";

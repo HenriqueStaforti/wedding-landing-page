@@ -3,6 +3,13 @@ import { getEventData } from "../data/eventData";
 
 const { schedule } = getEventData();
 const events = schedule.events ?? [];
+
+// Extrair horário do primeiro detalhe
+const extractTime = (details: string[]): string => {
+  if (!details || details.length === 0) return "--:--";
+  const match = details[0].match(/\d{1,2}:\d{2}/);
+  return match ? match[0] : "--:--";
+};
 ---
 
 <section
@@ -12,7 +19,8 @@ const events = schedule.events ?? [];
     "
 >
     <div class="mx-auto w-full max-w-6xl px-4 py-24 sm:px-6 lg:px-8">
-        <div class="max-w-4xl">
+        <!-- Header -->
+        <div class="max-w-4xl mb-20">
             <p
                 class="text-sm uppercase tracking-[0.35em]"
                 style="color: var(--color-muted);"
@@ -33,66 +41,70 @@ const events = schedule.events ?? [];
             </p>
         </div>
 
-        <div class="mt-16 flex flex-col">
-            {
-                events.map((event) => (
-                    <article
-                        class="sticky top-0 z-10 border-t border-dashed py-12 backdrop-blur"
-                        style="
-                            border-color: var(--color-muted);
-                            background: color-mix(in srgb, var(--color-primary) 95%, transparent);
-                        "
-                    >
-                        <div class="grid gap-10 lg:grid-cols-5 lg:items-start lg:gap-0">
-                            <span
-                                class="text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl"
-                                style="color: var(--color-secondary);"
+        <!-- Timeline Vertical -->
+        <div class="relative flex flex-col">
+            <!-- Linha vertical -->
+            <div 
+                class="absolute top-0 bottom-0 w-0.5"
+                style="
+                    left: 1.5rem;
+                    background: linear-gradient(to bottom, white, white);
+                    opacity: 0.2;
+                "
+            ></div>
+
+            <!-- Events Container -->
+            <div class="relative flex flex-col gap-6 sm:gap-8">
+                {
+                    events.map((event, index) => {
+                        const time = extractTime(event.details);
+                        
+                        return (
+                            <div 
+                                class="flex gap-3 sm:gap-6 pl-16 sm:pl-24 md:pl-32 items-center"
                             >
-                                {event.number}
-                            </span>
-                            <div
-                                class="flex flex-col gap-10 lg:col-span-4 lg:pl-12 lg:border-l lg:border-dashed"
-                                style="border-color: var(--color-muted);"
-                            >
-                                <div class="space-y-4">
-                                    <p
-                                        class="text-xs uppercase tracking-[0.35em]"
-                                        style="color: var(--color-secondary); opacity: 0.6;"
-                                    >
-                                        {event.label}
-                                    </p>
-                                    <h3
-                                        class="text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl"
-                                        style="color: var(--color-secondary);"
-                                    >
-                                        {event.title}
-                                    </h3>
+                                <!-- Ponto -->
+                                <div 
+                                    class="absolute flex-shrink-0"
+                                    style="left: 1.5rem; transform: translateX(-50%);"
+                                >
+                                    <div
+                                        class="w-3 h-3 rounded-full ring-2 ring-offset-2"
+                                        style="
+                                            background: white;
+                                            ring-color: var(--color-primary);
+                                        "
+                                    ></div>
                                 </div>
-                                <p
-                                    class="text-base sm:text-lg lg:text-xl max-w-2xl"
-                                    style="color: var(--color-secondary); opacity: 0.9;"
-                                >
-                                    {event.description}
-                                </p>
-                                <ul
-                                    class="space-y-3 text-sm sm:text-base"
-                                    style="color: var(--color-secondary); opacity: 0.8;"
-                                >
-                                    {event.details.map((detail) => (
-                                        <li class="flex items-start gap-3 leading-relaxed">
-                                            <span
-                                                class="mt-1 inline-block h-1.5 w-1.5 rounded-full"
-                                                style="background: var(--color-accent); opacity: 0.5;"
-                                            />
-                                            <span>{detail}</span>
-                                        </li>
-                                    ))}
-                                </ul>
+
+                                <!-- Horário e Título -->
+                                <div class="flex flex-col gap-1 min-w-0">
+                                    <div class="flex items-baseline gap-2 sm:gap-3 flex-wrap">
+                                        <span
+                                            class="text-base sm:text-lg font-bold uppercase tracking-[0.15em] flex-shrink-0"
+                                            style="color: white;"
+                                        >
+                                            {time}
+                                        </span>
+                                        <span
+                                            class="text-base uppercase tracking-[0.25em]"
+                                            style="color: var(--color-secondary);"
+                                        >
+                                            {event.title}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </article>
-                ))
-            }
+                        );
+                    })
+                }
+            </div>
         </div>
     </div>
 </section>
+
+<style>
+    section {
+        overflow-x: hidden;
+    }
+</style>
