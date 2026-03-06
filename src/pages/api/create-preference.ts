@@ -42,20 +42,20 @@ export async function POST({ request }: any) {
 
     const isSandbox = import.meta.env.MERCADO_PAGO_SANDBOX === "true";
 
-    console.log("Initializing Mercado Pago client with sandbox mode?", isSandbox);
+    //console.log("Initializing Mercado Pago client with sandbox mode?", isSandbox);
 
     const client = new MercadoPagoConfig({
       accessToken: accessToken,
     });
 
-    console.log("Creating preference for:", { giftId, giftTitle, giftPrice });
+    //console.log("Creating preference for:", { giftId, giftTitle, giftPrice });
 
     // Create preference
     const preference = new Preference(client);
 
     const siteUrl = import.meta.env.PUBLIC_SITE || "https://localhost:4321/";
 
-    console.log("back_urls will use siteUrl:", siteUrl);
+    //console.log("back_urls will use siteUrl:", siteUrl);
 
     const createdPreference = await preference.create({
       body: {
@@ -92,8 +92,8 @@ export async function POST({ request }: any) {
       throw new Error("No checkout URL returned from Mercado Pago");
     }
 
-    console.log("Preference created with ID:", createdPreference.id);
-    console.log("Checkout URL:", checkoutUrl);
+    //console.log("Preference created with ID:", createdPreference.id);
+    //console.log("Checkout URL:", checkoutUrl);
 
     return new Response(
       JSON.stringify({
