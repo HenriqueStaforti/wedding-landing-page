@@ -167,14 +167,14 @@
         }),
       });
 
-      console.log("PaymentModal: Response status:", response.status);
+      //console.log("PaymentModal: Response status:", response.status);
 
       if (!response.ok) {
         throw new Error("Falha ao criar preferência de pagamento");
       }
 
       const data = await response.json();
-      console.log("PaymentModal: Response data:", data);
+      //console.log("PaymentModal: Response data:", data);
 
       const { checkoutUrl } = data;
 
@@ -183,7 +183,7 @@
       }
 
       // Redirect directly to Mercado Pago checkout URL
-      console.log("PaymentModal: Redirecting to:", checkoutUrl);
+      //console.log("PaymentModal: Redirecting to:", checkoutUrl);
       window.location.href = checkoutUrl;
     } catch (error) {
       console.error("Erro ao processar pagamento:", error);
